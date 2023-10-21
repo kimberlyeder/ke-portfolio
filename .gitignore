@@ -1,0 +1,8 @@
+# ignore ALL .log files
+#*.log
+
+#ignore ALL files in ANY directory named temp
+
+# Ignore node_modules directory
+node_modules/
+public/mp4/Sweden.mp4

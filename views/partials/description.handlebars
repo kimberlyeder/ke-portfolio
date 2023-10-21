@@ -1,0 +1,13 @@
+<h1>Project Description</h1>
+{{#if dbError}}
+            <div>
+                Sorry, there was a problem with the database:<br />
+                {{theError}}
+            </div>
+        {{else}}
+                <div>
+                    <h2>{{projects.pname}}</h2>
+                    <div>{{projects.pyear}} - {{projects.ptype}}</div>
+                    <p>{{projects.pdesc}}</p>
+                </div>
+        {{/if}}

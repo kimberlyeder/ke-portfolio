@@ -1,0 +1,18 @@
+<body>
+    <h1>Screenplays</h1>
+    {{#if dbError}}
+            <div>
+                Sorry, there was a problem with the database:<br />
+                {{theError}}
+            </div>
+        {{else}}
+            {{#each screenplays}}
+                <div>
+                    <p></p>
+                    <h2>{{playname}}</h2>
+                    <div>{{playyear}} - {{playgenre}}</div>
+                    <p>{{ playdesc }}</p>
+                </div>
+            {{/each}}
+            {{/if}}
+</body>

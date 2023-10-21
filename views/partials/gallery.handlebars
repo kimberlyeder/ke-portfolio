@@ -1,0 +1,16 @@
+<body>
+    <h1>Gallery</h1>
+    {{#if dbError}}
+            <div>
+                Sorry, there was a problem with the database:<br />
+                {{theError}}
+            </div>
+        {{else}}
+            {{#each gallery}}
+                <div>
+                    <img class="galleryPic" src="{{picURL}}" alt="{{picURL}}"></a>
+                    <h2>{{picname}} - {{picyear}}</h2>
+                </div>
+            {{/each}}
+            {{/if}}
+</body>

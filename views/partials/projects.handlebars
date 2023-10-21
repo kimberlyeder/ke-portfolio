@@ -1,0 +1,65 @@
+<body>
+    <h1>Projects</h1>
+    <div class="Grid">
+        {{#if isAdmin}}
+            <div>
+                <a href="/projects/new" > New project </a>
+            </div>
+        {{/if}}
+        <div>
+            {{#if dbError}}
+                <div>
+                    Sorry, there was a problem with the database:<br />
+                    {{theError}}
+                </div>
+            {{else}}
+                {{#each projects}}
+                    <div>
+                        <a href="description"><img src="{{pimgURL}}" alt="{{pimgURL}}"></a>
+                        <h2>{{pname}}</h2>
+                        <div>{{pyear}} - {{ptype}}</div>
+                        <p class="details">{{pdesc}}</p>
+                        {{#if ../isAdmin}}
+                            <a href="/projects/update/{{pid}}" class="details">Modify</a>
+                            <a href="/projects/delete/{{pid}}" class="details">Delete</a>
+                            <p></p>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
+            <hr class="solid">
+            <h1>Films</h1>
+                <div style="padding:56.6% 0 0 0;position:relative;">
+                    <iframe src="https://player.vimeo.com/video/867142749?badge=0&amp;autopause=0&amp;quality_selector=1&amp;progress_bar=1&amp;player_id=0&amp;app_id=58479" 
+                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                    title="Schlafwandler Szene 4"></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+                <p></p>
+                <div style="padding:56.25% 0 0 0;position:relative;">
+                        <iframe src="https://player.vimeo.com/video/872289361?badge=0&amp;autopause=0&amp;quality_selector=1&amp;progress_bar=1&amp;player_id=0&amp;app_id=58479" 
+                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                        title="Norway adventures"></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+                <p></p>
+                <div style="padding:56.25% 0 0 0;position:relative;">
+                    <iframe src="https://player.vimeo.com/video/869830866?badge=0&amp;autopause=0&amp;quality_selector=1&amp;progress_bar=1&amp;player_id=0&amp;app_id=58479" 
+                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                    title="Punsch Rezept"></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+                <p></p>
+                <div style="padding:100% 0 0 0;position:relative;">
+                    <iframe src="https://player.vimeo.com/video/864893172?badge=0&amp;autopause=0&amp;quality_selector=1&amp;progress_bar=1&amp;player_id=0&amp;app_id=58479" 
+                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                    title="Campuskino Trailer"></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+                <p></p>
+
+    <p>All videos can be found in the original at vimeo.com</p>
+    <p><a class= "pure-button" href="https://vimeo.com/kimberlyeder">Vimeo</a></p>
+    </div>
+</body>

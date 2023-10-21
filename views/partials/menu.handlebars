@@ -1,0 +1,25 @@
+<header id="menu">
+    <h1>Portfolio</h1>
+    <h2>Kimberly Eder</h2>
+    <div class="container">
+            <nav class="right-menu" id="right-menu">
+                <ul>
+                     {{#if isLoggedIn}}
+                        <div>
+                            <div class="details">Hi, {{name}}! &nbsp; &nbsp; </div>
+                            <li><a href="/logout">Logout</a></li>
+                        </div>
+                    {{else}}
+                        <li><a href="/login">Login </a></li>
+                    {{/if}}
+                    <li><a href="home">Home</a></li>
+                    <li><a href="about">About</a></li>
+                    <li><a href="projects">Projects</a></li>
+                    <li><a href="gallery">Gallery</a></li>
+                    <li><a href="screenplays">Ideas</a></li>
+                    <li><a href="contact">Contact</a></li>
+                   
+                </ul>
+            </nav>
+        </div>
+        </header>
