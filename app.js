@@ -585,6 +585,9 @@ app.get('/login', (req, res) => {
   res.render('login', model);
 });
 
+//-----------------------------------------------------//
+// CRUD for projects 
+
 //deletes a project
 app.get('/projects/delete/:pid', (req, res) => {
   const id = req.params.pid
@@ -704,6 +707,125 @@ app.post('/projects/update/:pid', (req, res) => {
   }
 });
 
+//-----------------------------------------------------//
+// CRUD for screenplays
+
+//delete a screenplay
+app.get('/screenplays/delete/:playid', (req, res) => {
+  const id = req.params.playid
+  if (req.session.isLoggedIn==true && req.session.isAdmin==true){
+    db.run("DELETE FROM screenplays WHERE playid=?", [id], function(error, theScreenplays) {
+      if (error) {
+        const model = { 
+          dbError: true, 
+          theError: error,
+          isLoggedIn: req.session.isLoggedIn,
+          name: req.session.name,
+          isAdmin: req.session.isAdmin,
+        }
+        console.log("ERROR: ", error)
+        res.render("partials/home", model)
+      }else{
+        const model = { 
+          dbError: false, 
+          theError: "",
+          isLoggedIn: req.session.isLoggedIn,
+          name: req.session.name,
+          isAdmin: req.session.isAdmin,
+        }
+        console.log("---> Screenplay deleted.")
+        res.render("partials/home", model)
+      }
+      })
+  }else{
+    res.redirect('/login')
+  }
+});
+
+//sends the form for a new screenplay
+app.get('/screenplays/new', (req, res) => {
+  if(req.session.isLoggedIn==true && req.session.isAdmin==true) {
+    const model = {
+      isLoggedIn: req.session.isLoggedIn,
+      name: req.session.name,
+      isAdmin: req.session.isAdmin, 
+    }
+    res.render('partials/newscreenplay', model)
+  }else{
+  res.redirect("/login")
+  }
+});
+
+//creates a new screenplay
+app.post('/screenplays/new', (req, res) => {
+  const newplay = [
+    req.body.playid, req.body.playname, req.body.playdesc, req.body.playyear, req.body.playgenre
+  ]
+  if (req.session.isLoggedIn==true && req.session.isAdmin==true) {
+    db.run("INSERT INTO screenplays (playid, playname, playdesc, playyear, playgenre) VALUES (?,?,?,?,?)", newplay, (error) => {
+      if (error) {
+        console.log("ERROR: ", error)
+      }else{
+        console.log("Line added into the screenplays table!")
+      }
+      res.redirect('/screenplays')
+    })
+  }else{
+    res.redirect('/login')
+  }
+});
+  
+//sends the form to modify a screenplay
+app.get('/screenplays/update/:playid', (req, res) => {
+  const id = req.params.playid
+  db.get("SELECT * FROM screenplays WHERE playid=?", [id], function (error, theScreenplays) {
+    if(error){
+      console.log("ERROR: ", error)
+      const model = { 
+        dbError: true, 
+        theError: error,
+        screenplays: {},
+        isLoggedIn: req.session.isLoggedIn,
+        name: req.session.name,
+        isAdmin: req.session.isAdmin, 
+      }
+      //renders the page with the model
+      res.render('partials/modifyplay', model)
+    }else{
+      const model = { 
+        dbError: false, 
+        theError: "",
+        screenplays: theScreenplays,
+        isLoggedIn: req.session.isLoggedIn,
+        name: req.session.name,
+        isAdmin: req.session.isAdmin,
+      }
+      res.render("partials/modifyplay", model)
+    }
+  })
+});
+
+// modifies an existing screenplay, to update the table
+app.post('/screenplays/update/:playid', (req, res) => {
+  const newplay = [
+    req.body.playid, req.body.playname, req.body.playdesc, req.body.playyear, req.body.playgenre
+  ]
+  if (req.session.isLoggedIn==true && req.session.isAdmin==true) {
+    db.run("UPDATE screenplays SET playid=?, playname=?, playdesc=?, playyear=?, playgenre=? WHERE playid=?", newplay, (error) => {
+      if(error) {
+        console.log("ERROR: ", error)
+      }else{
+        console.log("Screenplays updatet!")
+      }
+      res.redirect('/screenplays')
+    });
+  }else{
+    res.redirect('/login')
+  }
+});
+
+//-----------------------------------------------------//
+
 //define the /logout route
 app.get('/logout', (req, res) => {
   req.session.destroy( (err) => {
@@ -714,8 +836,12 @@ app.get('/logout', (req, res) => {
 });
 
 
+app.listen(port, () => {
+  console.log(`Express server is running and listening on port ${port}`);
+})
 
-/*
+
+/* OLD CODE VERSION: 
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
   
@@ -924,7 +1050,3 @@ app.delete('/api/users/:id', (req, res) => {
   });
 });
 */
-
-app.listen(port, () => {
-    console.log(`Express server is running and listening on port ${port}`);
-})

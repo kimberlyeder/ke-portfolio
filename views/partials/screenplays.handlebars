@@ -1,6 +1,12 @@
 <body>
     <h1>Screenplays</h1>
-    {{#if dbError}}
+    {{#if isAdmin}}
+            <div>
+                <a href="/screenplays/new" > New Screenplay </a>
+            </div>
+    {{/if}}
+    <div>
+        {{#if dbError}}
             <div>
                 Sorry, there was a problem with the database:<br />
                 {{theError}}
@@ -12,7 +18,13 @@
                     <h2>{{playname}}</h2>
                     <div>{{playyear}} - {{playgenre}}</div>
                     <p>{{ playdesc }}</p>
+                    {{#if ../isAdmin}}
+                            <a href="/screenplays/update/{{playid}}" class="details">Modify</a>
+                            <a href="/screenplays/delete/{{playid}}" class="details">Delete</a>
+                            <p></p>
+                    {{/if}}
                 </div>
             {{/each}}
-            {{/if}}
+        {{/if}}
+    </div>
 </body>

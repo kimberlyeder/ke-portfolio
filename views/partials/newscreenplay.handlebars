@@ -1,0 +1,35 @@
+<div id="main">
+    <div>
+        <h1>New Screenplay</h1>
+        <div>
+            {{#if isLoggedIn}}
+                {{#if isAdmin}}
+                    <form action="/screenplays/new" method="POST">
+                        <fieldset>
+                                <label for="playname">Screenplay name: </label>
+                                <input type="text" name="playname" id="playname" required="required">
+                            <br />
+                                <label for="playdesc">Description: </label>
+                                <input type="text" name="playdesc" id="playdesc" mcols="30" rows="10" required="required">
+                            <br />
+                                <label for="playyear">Project year: </label>
+                                <input type="number" name="playyear" id="playyear" placeholder="2023" required="required">
+                            <br />
+                                <label for="playgenre">Genre: </label>
+                                <input type="text" name="playgenre" id="playgenre" placeholder="Thriller" required="required">
+                            <br />
+                        </fieldset>
+                        <input type="submit" value="Add Screenplay">
+                    </form>
+                {{else}}
+                    <p>Sorry, you must be an administrator to add a new screenplay!</p>
+                {{/if}}
+            {{else}}
+                <p>
+                    Sorry, you must be logged in to add a new screenplay!<br />
+                    Please go to the <a href="/login">login</a> page.
+                </p>
+            {{/if}}
+        </div>
+    </div>
+</div>
