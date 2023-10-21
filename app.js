@@ -687,19 +687,18 @@ app.get('/projects/update/:pid', (req, res) => {
 
 // modifies an existing project, to update the table
 app.post('/projects/update/:pid', (req, res) => {
-  const id = req.params.pid //gets the id from a dynamic parameter in the route
   const newp = [
-    req.body.projname, req.body.projyear, req.body.projdesc, req.body.projtype, req.body.projimg, id
+    req.body.pid, req.body.projname, req.body.projyear, req.body.projdesc, req.body.projtype, req.body.projimg, req.body.videoLink
   ]
   if (req.session.isLoggedIn==true && req.session.isAdmin==true) {
-    db.run("UPDATE projects SET pname=?, pyear=?, pdesc=?, ptype=?, pimgURL=?, videoLink=? WHERE pid=?", newp, (error) => {
+    db.run("UPDATE projects SET pid=?, pname=?, pyear=?, pdesc=?, ptype=?, pimgURL=?, videoLink=? WHERE pid=?", newp, (error) => {
       if(error) {
         console.log("ERROR: ", error)
       }else{
         console.log("Project updatet!")
       }
       res.redirect('/projects')
-    })
+    });
   }else{
     res.redirect('/login')
   }
