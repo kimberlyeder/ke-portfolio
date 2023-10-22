@@ -930,19 +930,6 @@ app.get('/secret', (req, res) => {
   }
 });
 
-app.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
-  res.send('Session destroyed');
-});
-  
-app.get('/api/users', (req, res) => {
-  const id = req.params.id;
-  const name = req.query.name;
-  const age = req.query.age;
-  res.status(200).json(user);
-});
-
 app.get('/api/users/:id', (req, res) => {
   // Get user with id req.params.id
   const id = req.params.id;
@@ -958,53 +945,7 @@ app.get('/api/users/:id', (req, res) => {
     }
   });    
 });
-
-app.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render('index', { user: req.session.user });
-  } else {
-    res.render('index');
-  }
-});  
-
-app.get('/', (req, res) => {
-  if (req.session.user) {
-    res.render('index', { user: req.session.user });
-  } else {
-    res.render('index');
-  }
-});
   
-app.get('/', function(req, res){
-    res.sendFile(__dirname + "/" + '/views/layouts/home');
-  });
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // Requires a sqlite3 database
-  db.get('SELECT * FROM users WHERE username = ?', [username], (err, user) => {
-    if (err) {
-      res.status(500).send({ error: 'Server error' });
-    } else if (!user) {
-      res.status(401).send({ error: 'User not found' });
-    } else {
-      const result = bcrypt.compareSync(password, user.hash);
-      
-      if (result) {
-        req.session.user = user;
-        res.redirect('/');
-      } else {
-        res.status(401).send({ error: 'Wrong password' });
-      }
-    }
-  });
-});  
-
 app.post('/api/users', (req, res) => {
   // Create a new user
   const name = req.body.name;
